@@ -52,15 +52,19 @@ public class GetPostsHandler {
     public CategoryViewDTO getPostsByCategorySlug(String category, Integer page) {
         log.debug("process=get_posts_by_category_slug, category={}, page={}", category, page);
         Pageable pageable = getPageable(page);
-        CategoryDTO categoryDTO = categoryRepository.findBySlug(category).map(categoryDTOMapper::toDTO).orElseThrow();
+        CategoryDTO categoryDTO =
+                categoryRepository.findBySlug(category).map(categoryDTOMapper::toDTO).orElseThrow();
         Page<Long> postIds = postRepository.findPostIdsByCategorySlug(category, pageable);
         List<Post> posts = postRepository.findPosts(postIds.getContent());
         Page<Post> postsPage = new PageImpl<>(posts, pageable, postIds.getTotalElements());
         PagedResult<PostUserViewDTO> postsData = convert(postsPage);
         return new CategoryViewDTO(
-                categoryDTO.id(), categoryDTO.name(), categoryDTO.slug(),categoryDTO.description(), categoryDTO.image(),
-                postsData
-        );
+                categoryDTO.id(),
+                categoryDTO.name(),
+                categoryDTO.slug(),
+                categoryDTO.description(),
+                categoryDTO.image(),
+                postsData);
     }
 
     private Pageable getPageable(Integer page) {

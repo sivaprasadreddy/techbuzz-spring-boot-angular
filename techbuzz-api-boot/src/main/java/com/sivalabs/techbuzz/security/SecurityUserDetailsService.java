@@ -16,9 +16,13 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         SecurityUser securityUser =
-                userRepository.findByEmail(username)
+                userRepository
+                        .findByEmail(username)
                         .map(SecurityUser::new)
-                        .orElseThrow(() -> new UsernameNotFoundException("No user found with username " + username));
+                        .orElseThrow(
+                                () ->
+                                        new UsernameNotFoundException(
+                                                "No user found with username " + username));
 
         if (!securityUser.isEnabled()) {
             throw new DisabledException("Account verification is pending");

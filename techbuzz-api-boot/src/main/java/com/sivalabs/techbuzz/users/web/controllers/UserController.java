@@ -9,7 +9,6 @@ import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,8 +30,7 @@ public class UserController {
 
     @PostMapping("/api/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(
-            @Valid @RequestBody CreateUserRequest createUserRequest) {
+    public void createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
         try {
             UserDTO userDTO = createUserHandler.createUser(createUserRequest);
             this.sendVerificationEmail(userDTO);
