@@ -1,0 +1,22 @@
+version: "3.6"
+services:
+  techbuzz-api:
+    image: "${TECHBUZZ_API_IMAGE}"
+    container_name: techbuzz-api-boot
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      LOGGING_FILE_NAME: ./logs/techbuzz-api-boot.log
+      SPRING_DATASOURCE_URL: "${DB_URL}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USERNAME}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+      EMAIL_PROVIDER: "${EMAIL_PROVIDER}"
+      SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
+      MAIL_HOST: "${MAIL_HOST}"
+      MAIL_PORT: "${MAIL_PORT}"
+    deploy:
+      resources:
+        limits:
+          memory: 700m

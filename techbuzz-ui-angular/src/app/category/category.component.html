@@ -1,0 +1,87 @@
+<div>
+  <div>
+    <ul class="nav justify-content-center">
+      <li class="nav-item" *ngFor="let category of categories">
+        <a class="nav-link" href="{{'/categories/'+category.slug}}">{{category.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="container text-center pt-3 pb-3">
+    <h2>{{category.description}}</h2>
+  </div>
+  <div class="pt-3">
+    <app-pagination [categorySlug]="category.slug" [postsResponse]="category.posts"></app-pagination>
+
+    <div>
+      <div class="alert alert-warning" role="alert"
+           *ngIf="category.posts.data.length == 0">
+        <h3 class="alert-heading">No results found</h3>
+      </div>
+      <div class="p-2" *ngFor="let post of category.posts.data">
+        <div class="card post">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{{post.url}}" target="_blank">{{post.title}}</a>
+            </h4>
+            <p class="card-text">
+            <div class="pb-2 text-muted">
+              Posted By: {{post.createdBy.name}}
+              Date: {{post.createdAt | date}}
+            </div>
+            <div>
+              {{post.content}}
+            </div>
+            <p *ngIf="isLoggedIn()" class="mt-3 mb-0">
+              <span class="p-1" *ngIf="post.editable" >
+                <a class="btn btn-primary" href="{{'/posts/'+post.id+'/edit'}}">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+              </span>
+              <span class="p-1" *ngIf="post.editable" >
+                <button class="btn btn-danger" (click)="deletePost(post.id)">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </span>
+              <span class="p-1">
+                <button class="btn btn-success" [ngClass]="{'disabled': post.upVoted}"
+                        (click)="upVote(post.id)">
+                  <span>{{post.upVoteCount}}</span>
+                  &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+              </span>
+              <span class="p-1">
+                <button class="btn btn-danger" [ngClass]="{'disabled': post.downVoted}"
+                (click)="downVote(post.id)">
+                  <span>{{post.downVoteCount}}</span>
+                  &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                </button>
+              </span>
+            </p>
+
+            <p *ngIf="!isLoggedIn()" class="mt-3 mb-0">
+                <span class="p-1"
+                      data-bs-toggle="tooltip" data-bs-placement="top"
+                      data-bs-title="Login to vote">
+                    <button class="btn btn-success disabled">
+                        <span>{{post.upVoteCount}}</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                    </button>
+                </span>
+              <span class="p-1"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Login to vote">
+                    <button class="btn btn-danger disabled">
+                        <span>{{post.downVoteCount}}</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                    </button>
+                </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <app-pagination [categorySlug]="category.slug" [postsResponse]="category.posts"></app-pagination>
+  </div>
+</div>

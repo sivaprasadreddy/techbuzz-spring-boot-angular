@@ -1,0 +1,67 @@
+<div class="row">
+
+  <div class="col-md-6 offset-md-3">
+
+    <div class="card">
+      <div class="card-header text-center">
+        <h3>Add New Post</h3>
+      </div>
+      <div class="card-body">
+        <form id="addForm" method="post"
+              [formGroup]="addPostForm"  (ngSubmit)="onAddPostSubmit()">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text"
+                   id="title"
+                   name="title"
+                   required
+                   formControlName="title"
+                   class="form-control"
+                   placeholder="Enter title"
+            />
+            <div class="invalid-feedback">Title Error</div>
+          </div>
+          <div class="mb-3">
+            <label for="url" class="form-label">URL</label>
+            <input type="text"
+                   id="url"
+                   name="url"
+                   required
+                   formControlName="url"
+                   class="form-control"
+                   placeholder="Enter url"
+            />
+            <div class="invalid-feedback">Url Error</div>
+          </div>
+          <div class="mb-3">
+            <label for="categoryId" class="form-label">Category</label>
+            <select id="categoryId" name="categoryId"
+                    formControlName="categoryId"
+                    class="form-select"
+                    required>
+              <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
+            </select>
+            <div class="invalid-feedback">Category Error</div>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content*</label>
+            <textarea id="content" name="content"
+                      required
+                      formControlName="content"
+                      rows="10"
+                      class="form-control"
+                      placeholder="Enter content"
+            ></textarea>
+            <div class="invalid-feedback">Content Error</div>
+          </div>
+
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary"
+                    [ngClass]="{'disabled': addPostForm.invalid}">Submit</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
