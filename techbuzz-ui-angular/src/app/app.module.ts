@@ -3,34 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
-import {AuthGuard} from "./auth.guard";
-import {HttpInterceptorService} from "./http-interceptor.service";
-import { VerifyEmailComponent } from './verify-email/verify-email.component';
-import { VerifyEmailStatusComponent } from './verify-email-status/verify-email-status.component';
+import {AuthModule} from "./auth/auth.module";
+import {PostsModule} from "./posts/posts.module";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    VerifyEmailComponent,
-    VerifyEmailStatusComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    AuthModule,
+    PostsModule
   ],
-  providers: [
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
