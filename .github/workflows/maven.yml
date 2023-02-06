@@ -1,4 +1,4 @@
-name: Build
+name: Build TechBuzz API
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Maven Build
+    name: Build API
     runs-on: ubuntu-latest
     defaults:
       run:
