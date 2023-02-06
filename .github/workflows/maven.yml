@@ -11,7 +11,9 @@ jobs:
   build:
     name: Maven Build
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: techbuzz-api-boot
     steps:
       - uses: actions/checkout@v3
 
@@ -24,3 +26,15 @@ jobs:
 
       - name: Build with Maven
         run: ./mvnw verify
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        continue-on-error: true # To make sure that SARIF upload gets called
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
