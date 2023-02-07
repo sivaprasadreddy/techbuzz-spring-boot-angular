@@ -20,6 +20,11 @@
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<spotless.version>2.32.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+		<node.version>v16.17.0</node.version>
+		<npm.version>8.19.1</npm.version>
+		<frontend-directory>techbuzz-ui-angular</frontend-directory>
+		<frontend-directory-path>../${frontend-directory}</frontend-directory-path>
+		<frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
 		<dockerUserName>sivaprasadreddy</dockerUserName>
 		<dockerImageName>${dockerUserName}/techbuzz-boot-angular</dockerImageName>
 	</properties>
@@ -207,9 +212,9 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.12.1</version>
+				<version>${frontend-maven-plugin.version}</version>
 				<configuration>
-					<workingDirectory>../techbuzz-ui-angular</workingDirectory>
+					<workingDirectory>${frontend-directory-path}</workingDirectory>
 					<installDirectory>target</installDirectory>
 				</configuration>
 				<executions>
@@ -219,8 +224,8 @@
 							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
-							<nodeVersion>v16.17.0</nodeVersion>
-							<npmVersion>8.19.1</npmVersion>
+							<nodeVersion>${node.version}</nodeVersion>
+							<npmVersion>${npm.version}</npmVersion>
 						</configuration>
 					</execution>
 					<execution>
@@ -251,7 +256,7 @@
 						<configuration>
 							<target>
 								<copy todir="${project.build.directory}/classes/public">
-									<fileset dir="${project.basedir}/../techbuzz-ui-angular/dist/techbuzz-ui-angular"/>
+									<fileset dir="${frontend-directory-path}/dist/${frontend-directory}"/>
 								</copy>
 							</target>
 						</configuration>

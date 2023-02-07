@@ -3,7 +3,6 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 
 ## Features
 * Login with username/password
-* Login with GitHub
 * Register with username/password
 * Email verification
 * View Posts by Category with pagination
@@ -19,6 +18,7 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 * Angular, Bootstrap
 * JUnit 5, RestAssured, Testcontainers
 
+## Service URLs
 * API: http://localhost:8080/
 * UI: http://localhost:4200/
 * MailHog: http://localhost:8025/
