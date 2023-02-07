@@ -2,7 +2,7 @@
   <h2 class="text-center">Welcome to TechBuzz</h2>
   <div class="row">
     <div class="col-sm-4 p-3" *ngFor="let category of categories">
-      <a class="category-card" href="{{'/categories/'+category.slug}}">
+      <a class="category-card" href="#" [routerLink]="['/categories', category.slug]">
         <div class="card h-100">
           <div class="card-body">
             <h5 class="card-title text-center">{{category.name}}</h5>

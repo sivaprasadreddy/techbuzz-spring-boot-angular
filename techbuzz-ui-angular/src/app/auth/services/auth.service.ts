@@ -2,27 +2,29 @@ import { Injectable } from '@angular/core';
 import {CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse, VerifyEmailResponse} from "../models/models";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import { environment } from "../../../environments/environment"
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private apiBaseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>("http://localhost:8080/login", credentials);
+    return this.http.post<LoginResponse>(`${this.apiBaseUrl}/login`, credentials);
   }
 
   register(request: CreateUserRequest): Observable<CreateUserResponse> {
-    return this.http.post<CreateUserResponse>("http://localhost:8080/api/users", request);
+    return this.http.post<CreateUserResponse>(`${this.apiBaseUrl}/api/users`, request);
   }
 
   verifyEmail(email: string, token: string): Observable<VerifyEmailResponse> {
-    return this.http.get<VerifyEmailResponse>("http://localhost:8080/api/verify-email?email="+email+"&token="+token);
+    return this.http.get<VerifyEmailResponse>(`${this.apiBaseUrl}/api/verify-email?email=${email}&token=${token}`);
   }
    setAuthUser(loginResponse: LoginResponse) {
-    console.log("auth resp:", loginResponse)
+    //console.log("auth resp:", loginResponse)
     localStorage.setItem("token", loginResponse.access_token)
     localStorage.setItem("auth", JSON.stringify(loginResponse))
   }

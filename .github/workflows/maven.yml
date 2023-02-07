@@ -1,4 +1,4 @@
-name: Build TechBuzz API
+name: Build TechBuzz
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
 
 jobs:
   build:
-    name: Build API
+    name: Build
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: techbuzz-api-boot
+        working-directory: techbuzz
     steps:
       - uses: actions/checkout@v3
 

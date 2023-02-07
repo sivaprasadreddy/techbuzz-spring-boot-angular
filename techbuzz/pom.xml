@@ -9,19 +9,19 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sivalabs</groupId>
-	<artifactId>techbuzz-api-boot</artifactId>
+	<artifactId>techbuzz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>techbuzz-api-boot</name>
-	<description>TechBuzz API using SpringBoot</description>
+	<name>techbuzz</name>
+	<description>TechBuzz</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 		<hypersistence-utils.version>3.1.1</hypersistence-utils.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<spotless.version>2.32.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
 		<dockerUserName>sivaprasadreddy</dockerUserName>
-		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
+		<dockerImageName>${dockerUserName}/techbuzz-boot-angular</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -171,6 +171,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<builder>dashaun/builder:tiny</builder>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -202,6 +205,63 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.12.1</version>
+				<configuration>
+					<workingDirectory>../techbuzz-ui-angular</workingDirectory>
+					<installDirectory>target</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v16.17.0</nodeVersion>
+							<npmVersion>8.19.1</npmVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install --force</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<configuration>
+							<target>
+								<copy todir="${project.build.directory}/classes/public">
+									<fileset dir="${project.basedir}/../techbuzz-ui-angular/dist/techbuzz-ui-angular"/>
+								</copy>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
 				<version>${spotless.version}</version>
@@ -228,7 +288,7 @@
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					<from>
-						<image>eclipse-temurin:19-jre-focal</image>
+						<image>eclipse-temurin:17-jre-focal</image>
 					</from>
 					<to>
 						<image>${dockerImageName}</image>

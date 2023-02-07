@@ -12,7 +12,7 @@
 	<description>TechBuzz</description>
 
 	<modules>
-		<module>techbuzz-api-boot</module>
+		<module>techbuzz</module>
 	</modules>
 
 </project>

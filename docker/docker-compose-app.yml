@@ -1,17 +1,19 @@
 version: "3.6"
 services:
   techbuzz-api:
-    image: "${TECHBUZZ_API_IMAGE}"
-    container_name: techbuzz-api-boot
+    image: sivaprasadreddy/techbuzz-boot-angular
+    container_name: techbuzz-boot-angular
     ports:
       - "8080:8080"
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      LOGGING_FILE_NAME: ./logs/techbuzz-api-boot.log
-      SPRING_DATASOURCE_URL: "${DB_URL}"
-      SPRING_DATASOURCE_USERNAME: "${DB_USERNAME}"
-      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+      LOGGING_FILE_NAME: ./logs/techbuzz-boot-angular.log
+      DB_HOST: "${DB_HOST}"
+      DB_PORT: "${DB_PORT}"
+      DB_DATABASE: "${DB_DATABASE}"
+      DB_USERNAME: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
       EMAIL_PROVIDER: "${EMAIL_PROVIDER}"
       SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
       MAIL_HOST: "${MAIL_HOST}"
