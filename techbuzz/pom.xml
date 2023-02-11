@@ -18,7 +18,7 @@
 		<hypersistence-utils.version>3.1.1</hypersistence-utils.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
-		<spotless.version>2.32.0</spotless.version>
+		<spotless.version>2.33.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
 		<node.version>v16.17.0</node.version>
 		<npm.version>8.19.1</npm.version>
