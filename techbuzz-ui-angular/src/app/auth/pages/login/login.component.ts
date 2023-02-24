@@ -16,7 +16,7 @@ export class LoginComponent {
   }
   error : string | null = null;
   loginForm = this.fb.group({
-    username: ['', [Validators.required, Validators.pattern(/\S/)]],
+    username: ['', [Validators.required, Validators.email, Validators.pattern(/\S/)]],
     password: ['', [Validators.required, Validators.pattern(/\S/)]]
   });
 

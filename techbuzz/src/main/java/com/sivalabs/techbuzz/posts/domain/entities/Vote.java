@@ -34,7 +34,7 @@ public class Vote {
     @Column(name = "post_id", nullable = false)
     private Long postId;
 
-    @Column(name = "value", nullable = false)
+    @Column(name = "vote_value", nullable = false)
     private Integer value;
 
     @Column(updatable = false)
